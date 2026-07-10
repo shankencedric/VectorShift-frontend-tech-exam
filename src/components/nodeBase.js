@@ -41,7 +41,7 @@ export const NodeBase = ({ id, data }) => {
       type={handle.type ?? 'source'}
       position={handle.position ?? Position.Right}
       id={`${id}-${handle.name}`}
-      style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
+      style={{ top: `${(i+1) / (outputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
 
