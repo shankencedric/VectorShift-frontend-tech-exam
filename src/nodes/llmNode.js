@@ -16,8 +16,8 @@ export const LLMNode = ({ id, data }) => {
       data={{
         title: 'LLM',
         body: body,
-        inputHandles: [{id: `system`}, {id: `prompt`}],
-        outputHandles: [{id: `response`}]
+        inputHandles: [ `system`, `prompt` ],
+        outputHandles: [ `response` ]
       }}
     />
   );

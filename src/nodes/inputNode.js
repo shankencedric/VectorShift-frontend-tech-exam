@@ -42,7 +42,7 @@ export const InputNode = ({ id, data }) => {
         title: 'Input',
         body: body,
         inputHandles: null,
-        outputHandles: [ { id: `value` } ]
+        outputHandles: [ `value` ]
       }}
     />
   );

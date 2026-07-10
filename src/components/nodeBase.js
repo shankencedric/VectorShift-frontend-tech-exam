@@ -3,35 +3,34 @@
 import { Handle, Position } from 'reactflow';
 
 /**
+ * @typedef {Object} HandleConfig
+ * @property {string} [name] - The unique identifier for this handle (e.g., 'value', 'prompt').
+ * @property {'source' | 'target'} [type] - Overrides default source/target behavior.
+ * @property {Position} [position] - Overrides default Left/Right anchoring.
+ * @property {React.CSSProperties} [style] - Custom styles to merge with auto-positioning.
+ */
+
+/**
  * A base component for creating custom nodes in the flowchart.
- * @param {string} id - Default id for reactflow node.
- * @param {Object} data - The flexible data for the node, and expects the following
- *    data.id: string,
- *    data.type: string, 
- *    data.title: string, 
- *    data.body: JSX.Element,
- *    data.inputHandles: array of objects (detailed below),
- *    data.outputHandles: array of objects (detailed below). 
- * 
- * The handle arrays expect the following:
- *    {
- *      id: string,                     
- *      type: 'source' | 'target',      // optional, defaults to 'target' for input and 'source' for output
- *      position: reactflow.Position    // optional, defaults to Left for input and Right for output
- *      style: CSSProperties            // optional (automatically aligned)
- *    }
+ * @param {Object} props
+ * @param {string} props.id - Default id for reactflow node.
+ * @param {Object} props.data - The flexible data payload for the node.
+ * @param {string} props.data.title - The display title of the node.
+ * @param {JSX.Element} props.data.body - The internal UI components of the node.
+ * @param {Array<string | HandleConfig>} [props.data.inputHandles] - Array of string IDs or configuration objects defined as `HandleConfig`.
+ * @param {Array<string | HandleConfig>} [props.data.outputHandles] - Array of string IDs or configuration objects defined as `HandleConfig`.
  */
 export const NodeBase = ({ id, data }) => {
 
-  const inputs = data?.inputHandles || [];
-  const outputs = data?.outputHandles || [];
+  const inputs = NormalizeHandles(data?.inputHandles);
+  const outputs = NormalizeHandles(data?.outputHandles);
 
   const inputHandles = inputs.map((handle, i) => (
     <Handle
       key={`inp-${i}`}
       type={handle.type ?? 'target'}
       position={handle.position ?? Position.Left}
-      id={`${id}-${handle.id}`}
+      id={`${id}-${handle.name}`}
       style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
@@ -41,7 +40,7 @@ export const NodeBase = ({ id, data }) => {
       key={`out-${i}`}
       type={handle.type ?? 'source'}
       position={handle.position ?? Position.Right}
-      id={`${id}-${handle.id}`}
+      id={`${id}-${handle.name}`}
       style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
@@ -59,3 +58,19 @@ export const NodeBase = ({ id, data }) => {
     </div>
   );
 }
+
+/**
+ * Normalizes an array of handles to ensure uniform object structure.
+ * Converts simple string IDs into base configuration objects.
+ * @param {Array<string | HandleConfig>} [handles] - The raw array of handle strings or custom configuration objects (`HandleConfig` objects).
+ * @returns {Array<HandleConfig>} A standardized array of `HandleConfig` objects.
+ */
+const NormalizeHandles = (handles) => {
+  if (!handles) return [];
+
+  return handles.map((handle) => {
+    if (typeof handle === 'string') 
+      return { name: handle }
+    return handle;
+  });
+};

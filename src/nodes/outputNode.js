@@ -41,7 +41,7 @@ export const OutputNode = ({ id, data }) => {
       data={{
         title: 'Output',
         body: body,
-        inputHandles: [{id: `value`}],
+        inputHandles: [ `value` ],
         outputHandles: null
       }}
     />

@@ -30,7 +30,7 @@ export const TextNode = ({ id, data }) => {
         title: 'Text',
         body: body,
         inputHandles: null,
-        outputHandles: [{id: `output`}]
+        outputHandles: [ `output` ]
       }}
     />
   );
