@@ -1,7 +1,5 @@
 // attachmentNode.js
 
-import { useState } from 'react';
-import { Handle, Position } from 'reactflow';
 import { NodeBase } from '../components/nodeBase';
 
 export const AttachmentNode = ({ id, data }) => {

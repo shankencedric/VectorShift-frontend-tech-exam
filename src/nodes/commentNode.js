@@ -1,7 +1,6 @@
 // commentNode.js
 
 import { useState } from 'react';
-import { Handle, Position } from 'reactflow';
 import { NodeBase } from '../components/nodeBase';
 
 export const CommentNode = ({ id, data }) => {
