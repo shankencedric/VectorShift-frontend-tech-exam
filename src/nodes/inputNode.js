@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 
-export const InputNode = ({ id, data }) => {
+export const InputNode = ({ id, data, selected }) => {
   const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
   const [inputType, setInputType] = useState(data?.inputType || 'Text');
 
@@ -16,23 +16,26 @@ export const InputNode = ({ id, data }) => {
   };
 
   const body = 
-    <div>
+    <>
       <label>
-          Name:
-          <input 
-            type="text" 
-            value={currName} 
-            onChange={handleNameChange} 
-          />
-        </label>
-        <label>
-          Type:
-          <select value={inputType} onChange={handleTypeChange}>
-            <option value="Text">Text</option>
-            <option value="File">File</option>
-          </select>
-        </label>
-      </div>;
+        Name
+        <input 
+          type="text" 
+          value={currName} 
+          onChange={handleNameChange} 
+        />
+      </label>
+      <label>
+        Type
+        <select 
+          value={inputType} 
+          onChange={handleTypeChange} 
+          >
+          <option value="Text">Text</option>
+          <option value="File">File</option>
+        </select>
+      </label>
+    </>;
 
   return (
     <NodeBase
@@ -43,6 +46,7 @@ export const InputNode = ({ id, data }) => {
         inputHandles: null,
         outputHandles: [ `value` ]
       }}
+      selected={selected}
     />
   );
 }

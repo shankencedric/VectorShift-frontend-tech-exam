@@ -20,10 +20,12 @@ import { Handle, Position } from 'reactflow';
  * @param {Array<string | HandleConfig>} [props.data.inputHandles] - Array of string IDs or configuration objects defined as `HandleConfig`.
  * @param {Array<string | HandleConfig>} [props.data.outputHandles] - Array of string IDs or configuration objects defined as `HandleConfig`.
  */
-export const NodeBase = ({ id, data }) => {
+export const NodeBase = ({ id, data, selected }) => {
 
   const inputs = NormalizeHandles(data?.inputHandles);
   const outputs = NormalizeHandles(data?.outputHandles);
+
+  const handleClass = "w-2.5 h-2.5 bg-white border-2 border-gray-900 rounded-full";
 
   const inputHandles = inputs.map((handle, i) => (
     <Handle
@@ -31,6 +33,7 @@ export const NodeBase = ({ id, data }) => {
       type={handle.type ?? 'target'}
       position={handle.position ?? Position.Left}
       id={`${id}-${handle.name}`}
+      className={handleClass}
       style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
@@ -41,23 +44,37 @@ export const NodeBase = ({ id, data }) => {
       type={handle.type ?? 'source'}
       position={handle.position ?? Position.Right}
       id={`${id}-${handle.name}`}
+      className={handleClass}
       style={{ top: `${(i+1) / (outputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
 
   return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
+    <div className={`
+      bg-white border rounded flex flex-col font-sans transition-all min-w-[260px]
+      ${selected 
+        ? 'border-vs-gold shadow-md ring-1 ring-vs-gold/50' 
+        : 'border-gray-200/80 shadow-[0_2px_8px_rgba(15,19,26,0.04)] hover:border-gray-400'}
+      `}>
+
       {inputHandles}
-      <div>
-        <span>{data?.title}</span>
+        
+      {/* Header */}
+      <div className="px-4 py-2.5 border-b border-gray-100 bg-[#FAFAFA]/60 rounded-t">
+        <h3 className="m-0 text-[13px] font-normal tracking-tight text-vs-dark">
+          {data?.title}
+        </h3>
       </div>
-      <div>
+        
+      {/* Body */}
+      <div className="node-body-container p-4 flex flex-col gap-3">
         {data?.body}
       </div>
+        
       {outputHandles}
     </div>
   );
-}
+};
 
 /**
  * Normalizes an array of handles to ensure uniform object structure.

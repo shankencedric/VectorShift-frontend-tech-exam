@@ -1,27 +1,26 @@
 // commentNode.js
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useUpdateNodeInternals } from 'reactflow';
 import { NodeBase } from '../components/nodeBase';
+import { FlexibleTextArea } from '../components/flexibleTextArea';
 
-export const CommentNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
+export const CommentNode = ({ id, data, selected }) => {
+  const [currText, setCurrText] = useState(data?.text);
+  const textareaRef = useRef(null); 
 
-  const handleTextChange = (e) => {
-    setCurrText(e.target.value);
-  };
+  const updateNodeInternals = useUpdateNodeInternals(); // for recalibrating node boundaries when handle count changes
 
   const body = 
-    <div>
-        <label>
-          /*
-          <input 
-            type="text" 
-            value={currText} 
-            onChange={handleTextChange} 
-          />
-          */
-        </label>
-      </div>;
+    <>
+      <label>
+        /*
+        <div className="pl-1.5 flex flex-col">
+          <FlexibleTextArea value={currText} onChange={setCurrText}/>
+        </div>
+        */
+      </label>
+    </>;
 
   return (
     <NodeBase
@@ -32,6 +31,7 @@ export const CommentNode = ({ id, data }) => {
         inputHandles: null,
         outputHandles: null
       }}
+      selected={selected}
     />
   );
 }

@@ -3,17 +3,17 @@
 import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 
-export const DecoderNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{encoded_input}}');
+export const DecoderNode = ({ id, data, selected }) => {
+  const [currText, setCurrText] = useState(data?.text || 'Name');
   const [decodingType, setDecodingType] = useState(data?.decodingType || 'base64');
 
   const handleTextChange = (e) => setCurrText(e.target.value);
   const handleTypeChange = (e) => setDecodingType(e.target.value);
 
   const body = (
-    <div>
+    <>
       <label>
-        Text to decode:
+        Name
         <input 
           type="text" 
           value={currText} 
@@ -21,7 +21,7 @@ export const DecoderNode = ({ id, data }) => {
         />
       </label>
       <label>
-        Decoding type:
+        Decoding type
         <select 
           value={decodingType} 
           onChange={handleTypeChange}
@@ -31,7 +31,7 @@ export const DecoderNode = ({ id, data }) => {
           <option value="hex">Hex</option>
         </select>
       </label>
-    </div>
+    </>
   );
 
   return (
@@ -43,6 +43,7 @@ export const DecoderNode = ({ id, data }) => {
         inputHandles: [ `value` ],
         outputHandles: [ `value` ]
       }}
+      selected={selected}
     />
   );
 };

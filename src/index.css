@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,52 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@layer components {
+  /* Automatically style every node label */
+  .node-body-container label {
+    display: flex;
+    flex-direction: column;
+    font-family: "Public Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Automatically style every input and select within a node label */
+  .node-body-container label select,
+  .node-body-container label input,
+  .node-body-container label textarea {
+    margin-top: 4px;
+    padding: 6px 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+    font-size: 12px; 
+    font-weight: 400;
+    color: theme('colors.vs-dark');
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+
+  .node-body-container label select:focus,
+  .node-body-container label input:focus,
+  .node-body-container label textarea:focus {
+    border-color: theme('colors.vs-gold');
+  }
+
+/* Automatically style structural or descriptive text elements (e.g., span, p, textarea) */
+  .node-body-container span,
+  .node-body-container p {
+    font-family: "Public Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: theme('colors.vs-dark');
+    line-height: 1.5;
+    text-transform: none; 
+    letter-spacing: normal;
+  }
 }

@@ -2,18 +2,21 @@
 
 import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
+import { FlexibleTextArea } from '../components/flexibleTextArea';
 
-export const FlexNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || 'Type anything here...');
-  const [selectionType, setSelectionType] = useState(data?.selectionType || 'Select an option...');
+export const FlexNode = ({ id, data, selected }) => {
+  const [currText, setCurrText] = useState(data?.text || 'Type briefly here...');
+  const [currTextArea, setCurrTextArea] = useState(data?.textarea || 'Type a lot here...');
+  const [selectionType, setSelectionType] = useState(data?.selectionType || 'sel');
 
   const handleTextChange = (e) => setCurrText(e.target.value);
+  const handleTextAreaChange = (e) => setCurrTextArea(e.target.value);
   const handleTypeChange = (e) => setSelectionType(e.target.value);
 
   const body = (
-    <div>
+    <>
       <label>
-        You can type here:
+        You can briefly type here
         <input 
           type="text" 
           value={currText} 
@@ -22,11 +25,20 @@ export const FlexNode = ({ id, data }) => {
       </label>
 
       <label>
-        You can select an option here:
+        You can type long things here
+        <FlexibleTextArea
+          value={currTextArea} 
+          onChange={setCurrTextArea} 
+        />
+      </label>
+
+      <label>
+        You can select an option here
         <select 
           value={selectionType} 
           onChange={handleTypeChange}
         >
+          <option value="sel">Select from the selection below</option>
           <option value="selA">Selection A</option>
           <option value="selB">Selection B</option>
           <option value="selC">Selection C</option>
@@ -36,10 +48,10 @@ export const FlexNode = ({ id, data }) => {
       </label>
       
       <label>
-        You can attach things here:
+        You can attach things here
         <input type="file" />
       </label>
-    </div>
+    </>
   );
 
   return (
@@ -51,6 +63,7 @@ export const FlexNode = ({ id, data }) => {
         inputHandles: [ `value`, `value`, `value` ], 
         outputHandles: [ `value`, `value`, `value`, `value`, `value` ]
       }}
+      selected={selected}
     />
   );
 };

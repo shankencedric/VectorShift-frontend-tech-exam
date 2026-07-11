@@ -2,12 +2,12 @@
 
 import { NodeBase } from '../components/nodeBase';
 
-export const LLMNode = ({ id, data }) => {
+export const LLMNode = ({ id, data, selected }) => {
 
   const body = 
-    <div>
-      <span>This is a LLM.</span>
-    </div>;
+    <>
+      <span>This is an LLM.</span>
+    </>;
 
   return (
     <NodeBase
@@ -18,6 +18,7 @@ export const LLMNode = ({ id, data }) => {
         inputHandles: [ `system`, `prompt` ],
         outputHandles: [ `response` ]
       }}
+      selected={selected}
     />
   );
 }

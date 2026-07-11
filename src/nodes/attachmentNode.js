@@ -2,13 +2,13 @@
 
 import { NodeBase } from '../components/nodeBase';
 
-export const AttachmentNode = ({ id, data }) => {
+export const AttachmentNode = ({ id, data, selected }) => {
   const body = 
-    <div>
-      <label>
+    <>
+      <label className="">
         <input type="file" />
       </label>
-    </div>;
+    </>;
 
   return (
     <NodeBase
@@ -19,6 +19,7 @@ export const AttachmentNode = ({ id, data }) => {
         inputHandles: null,
         outputHandles: [ `content` ]
       }}
+      selected={selected}
     />
   );
 }

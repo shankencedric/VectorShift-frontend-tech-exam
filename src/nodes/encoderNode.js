@@ -3,17 +3,17 @@
 import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 
-export const EncoderNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
+export const EncoderNode = ({ id, data, selected }) => {
+  const [currText, setCurrText] = useState(data?.text || 'Name');
   const [encodingType, setEncodingType] = useState(data?.encodingType || 'base64');
 
   const handleTextChange = (e) => setCurrText(e.target.value);
   const handleTypeChange = (e) => setEncodingType(e.target.value);
 
   const body = (
-    <div>
+    <>
       <label>
-        Text to encode:
+        Name
         <input 
           type="text" 
           value={currText} 
@@ -21,7 +21,7 @@ export const EncoderNode = ({ id, data }) => {
         />
       </label>
       <label>
-        Encoding type:
+        Encoding type
         <select 
           value={encodingType} 
           onChange={handleTypeChange}
@@ -31,7 +31,7 @@ export const EncoderNode = ({ id, data }) => {
           <option value="hex">Hex</option>
         </select>
       </label>
-    </div>
+    </>
   );
 
   return (
@@ -43,6 +43,7 @@ export const EncoderNode = ({ id, data }) => {
         inputHandles: [ `value` ], 
         outputHandles: [ `value` ]
       }}
+      selected={selected}
     />
   );
 };

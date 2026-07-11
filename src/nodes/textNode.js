@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
+import { FlexibleTextArea } from '../components/flexibleTextArea';
 
-export const TextNode = ({ id, data }) => {
+export const TextNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
 
   const handleTextChange = (e) => {
@@ -11,16 +12,15 @@ export const TextNode = ({ id, data }) => {
   };
 
   const body = 
-    <div>
-        <label>
-          Text:
-          <input 
-            type="text" 
-            value={currText} 
-            onChange={handleTextChange} 
-          />
-        </label>
-      </div>;
+    <>
+      <label>
+        Text
+        <FlexibleTextArea 
+          value={currText} 
+          onChange={handleTextChange} 
+        />
+      </label>
+    </>;
 
   return (
     <NodeBase
@@ -31,6 +31,7 @@ export const TextNode = ({ id, data }) => {
         inputHandles: null,
         outputHandles: [ `output` ]
       }}
+      selected={selected}
     />
   );
 }
