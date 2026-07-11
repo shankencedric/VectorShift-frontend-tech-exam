@@ -1,6 +1,8 @@
 // nodeBase.js
 
 import { Handle, Position } from 'reactflow';
+import { useState, useEffect } from 'react';
+import { useUpdateNodeInternals } from 'reactflow';
 
 /**
  * @typedef {Object} HandleConfig
@@ -8,6 +10,7 @@ import { Handle, Position } from 'reactflow';
  * @property {'source' | 'target'} [type] - Overrides default source/target behavior.
  * @property {Position} [position] - Overrides default Left/Right anchoring.
  * @property {React.CSSProperties} [style] - Custom styles to merge with auto-positioning.
+ * @property {bool} [isDynamic] - True if defined using the `{{varName}}` text input.
  */
 
 /**
@@ -17,35 +20,20 @@ import { Handle, Position } from 'reactflow';
  * @param {Object} props.data - The flexible data payload for the node.
  * @param {string} props.data.title - The display title of the node.
  * @param {JSX.Element} props.data.body - The internal UI components of the node.
+ * @param {Array<string>} props.data.dynamicVariables - User-defined variables using the `{{varName}}` text input pattern.
  * @param {Array<string | HandleConfig>} [props.data.inputHandles] - Array of string IDs or configuration objects defined as `HandleConfig`.
  * @param {Array<string | HandleConfig>} [props.data.outputHandles] - Array of string IDs or configuration objects defined as `HandleConfig`.
  */
 export const NodeBase = ({ id, data, selected }) => {
 
-  const inputs = NormalizeHandles(data?.inputHandles);
-  const outputs = NormalizeHandles(data?.outputHandles);
+  const inputs = NormalizeHandles([...(data?.inputHandles || []), ...(data?.dynamicVariables || [])]);
+  const outputs = NormalizeHandles(data?.outputHandles || []);
   
-  const inputHandles = inputs.map((handle, i) => (
-    <Handle
-      key={`inp-${i}`}
-      type={handle.type ?? 'target'}
-      position={handle.position ?? Position.Left}
-      id={`${id}-${handle.name}-${i}`}
-      className="vs-flow-handle"
-      style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
-    />
-  ));
-
-  const outputHandles = outputs.map((handle, i) => (
-    <Handle
-      key={`out-${i}`}
-      type={handle.type ?? 'source'}
-      position={handle.position ?? Position.Right}
-      id={`${id}-${handle.name}-${i}`}
-      className="vs-flow-handle"
-      style={{ top: `${(i+1) / (outputs.length+1) * 100}%`, ...handle.style }}
-    />
-  ));
+  // This block updates alignment if needed
+  const updateNodeInternals = useUpdateNodeInternals();
+  useEffect(() => {
+    updateNodeInternals(id);
+  }, [inputs.length, id, updateNodeInternals]);
 
   return (
     <div className={`
@@ -55,21 +43,49 @@ export const NodeBase = ({ id, data, selected }) => {
         : 'border-gray-200/80 shadow-[0_2px_8px_rgba(15,19,26,0.04)] hover:border-gray-400'}
       `}>
 
-      {inputHandles}
-        
-      {/* Header */}
+      {/* INPUT HANDLES */}
+      {inputs.map((handle, i) => (
+        <>
+          <Handle
+            key={`inp-${i}`}
+            type={handle.type ?? 'target'}
+            position={handle.position ?? Position.Left}
+            id={`${id}-${handle.name}-${i}`}
+            className="vs-flow-handle"
+            style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
+          />
+          
+          {/* Floating Variable Tag */}
+          {handle.isDynamic && (
+            <span className="absolute left-4 -translate-y-1/2 text-[9px] font-sans font-bold text-gray-400 bg-white/90 px-1 py-0.5 rounded shadow-2xs uppercase tracking-wide whitespace-nowrap">
+              {handle.name}
+            </span>
+          )}
+        </>
+      ))}
+
+      {/* HEADER */}
       <div className="px-4 py-2.5 border-b border-gray-100 bg-[#FAFAFA]/60 rounded-t">
         <h3 className="m-0 text-[13px] font-normal tracking-tight text-vs-dark">
           {data?.title}
         </h3>
       </div>
         
-      {/* Body */}
+      {/* BODY */}
       <div className="node-body-container p-4 flex flex-col gap-3">
         {data?.body}
       </div>
         
-      {outputHandles}
+      {/* OUTPUT HANDLES */}
+      {outputs.map((handle, i) => (
+        <Handle
+          key={`out-${i}`}
+          type={handle.type ?? 'source'}
+          position={handle.position ?? Position.Right}
+          id={`${id}-${handle.name}-${i}`}
+          className="vs-flow-handle"
+          style={{ top: `${(i+1) / (outputs.length+1) * 100}%`, ...handle.style }}
+      />))}
     </div>
   );
 };
