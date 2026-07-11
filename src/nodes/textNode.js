@@ -17,7 +17,7 @@ export const TextNode = ({ id, data, selected }) => {
         Text
         <FlexibleTextArea 
           value={currText} 
-          onChange={handleTextChange} 
+          onChange={setCurrText} 
         />
       </label>
     </>;
