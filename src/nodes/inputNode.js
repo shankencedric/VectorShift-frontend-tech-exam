@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { NodeBase } from '../components/nodeBase';
 
 export const InputNode = ({ id, data, selected }) => {
-  const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
+  const [currName, setCurrName] = useState(data?.inputName || `{{${id.replace('customInput-', 'input_')}}}`);
   const [inputType, setInputType] = useState(data?.inputType || 'Text');
   const [dynamicVariables, setDynamicVariables] = useState([]);
 
@@ -38,6 +38,7 @@ export const InputNode = ({ id, data, selected }) => {
           type="text" 
           value={currName} 
           onChange={handleNameChange} 
+          placeholder="Type {{inputName}} pattern here..."
         />
       </label>
       <label>
