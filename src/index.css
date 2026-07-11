@@ -17,6 +17,23 @@ code {
 }
 
 @layer components {
+  /* The centralized global style for all React Flow handles */
+  .react-flow__handle.vs-flow-handle {
+    width: 10px;
+    height: 10px;
+    background-color: #FFFFFF;
+    border: 2px solid theme('colors.vs-dark'); 
+    border-radius: 9999px; 
+    transform: translateY(150%);
+    transition: transform 0.1s ease, border-color 0.1s ease;
+  }
+
+  /* Interactive state for when a user hovers over a connectable port */
+  .react-flow__handle.vs-flow-handle:hover {
+    transform: translateY(150%) scale(1.2);
+    border-color: theme('colors.vs-gold');
+  }
+
   /* Automatically style every node label */
   .node-body-container label {
     display: flex;

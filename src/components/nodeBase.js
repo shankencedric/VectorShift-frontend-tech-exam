@@ -24,16 +24,14 @@ export const NodeBase = ({ id, data, selected }) => {
 
   const inputs = NormalizeHandles(data?.inputHandles);
   const outputs = NormalizeHandles(data?.outputHandles);
-
-  const handleClass = "w-2.5 h-2.5 bg-white border-2 border-gray-900 rounded-full";
-
+  
   const inputHandles = inputs.map((handle, i) => (
     <Handle
       key={`inp-${i}`}
       type={handle.type ?? 'target'}
       position={handle.position ?? Position.Left}
-      id={`${id}-${handle.name}`}
-      className={handleClass}
+      id={`${id}-${handle.name}-${i}`}
+      className="vs-flow-handle"
       style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
@@ -43,8 +41,8 @@ export const NodeBase = ({ id, data, selected }) => {
       key={`out-${i}`}
       type={handle.type ?? 'source'}
       position={handle.position ?? Position.Right}
-      id={`${id}-${handle.name}`}
-      className={handleClass}
+      id={`${id}-${handle.name}-${i}`}
+      className="vs-flow-handle"
       style={{ top: `${(i+1) / (outputs.length+1) * 100}%`, ...handle.style }}
     />
   ));
