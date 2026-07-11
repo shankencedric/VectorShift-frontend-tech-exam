@@ -3,17 +3,32 @@
 import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 import { FlexibleTextArea } from '../components/flexibleTextArea';
+import { useVariableParser } from '../hooks/useVariableParser'
 
 export const FlexNode = ({ id, data, selected }) => {
+  const [customInputs, setCustomInputs] = useState(data?.customInputs || '');
   const [currText, setCurrText] = useState(data?.text || '');
   const [currTextArea, setCurrTextArea] = useState(data?.textarea || '');
   const [selectionType, setSelectionType] = useState(data?.selectionType || 'sel');
+  const [dynamicVariables, setDynamicVariables] = useState([]);
 
+  const handleCustomInputsChange = (e) => setCustomInputs(e.target.value);
   const handleTextChange = (e) => setCurrText(e.target.value);
   const handleTypeChange = (e) => setSelectionType(e.target.value);
+  useVariableParser(customInputs, setDynamicVariables);
 
   const body = (
     <>
+      <label>
+        You can add inputs here
+        <input 
+          type="text" 
+          value={customInputs} 
+          onChange={handleCustomInputsChange}
+          placeholder='Type {{inputName}} here...' 
+        />
+      </label>
+      
       <label>
         You can briefly type here
         <input 
@@ -62,7 +77,8 @@ export const FlexNode = ({ id, data, selected }) => {
         title: 'Flex',
         body: body,
         inputHandles: [ `value`, `value`, `value` ], 
-        outputHandles: [ `value`, `value`, `value`, `value`, `value` ]
+        outputHandles: [ `value`, `value`, `value`, `value`, `value` ],
+        dynamicVariables: dynamicVariables
       }}
       selected={selected}
     />
