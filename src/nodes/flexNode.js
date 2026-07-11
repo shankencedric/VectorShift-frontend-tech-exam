@@ -8,6 +8,7 @@ export const FlexNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text || 'Type briefly here...');
   const [currTextArea, setCurrTextArea] = useState(data?.textarea || 'Type a lot here...');
   const [selectionType, setSelectionType] = useState(data?.selectionType || 'sel');
+  const [dynamicVariables, setDynamicVariables] = useState([]);
 
   const handleTextChange = (e) => setCurrText(e.target.value);
   const handleTypeChange = (e) => setSelectionType(e.target.value);
@@ -28,6 +29,7 @@ export const FlexNode = ({ id, data, selected }) => {
         <FlexibleTextArea
           value={currTextArea} 
           onChange={setCurrTextArea} 
+          onVariablesChange={setDynamicVariables}
         />
       </label>
 
@@ -60,7 +62,8 @@ export const FlexNode = ({ id, data, selected }) => {
         title: 'Flex',
         body: body,
         inputHandles: [ `value`, `value`, `value` ], 
-        outputHandles: [ `value`, `value`, `value`, `value`, `value` ]
+        outputHandles: [ `value`, `value`, `value`, `value`, `value` ],
+        dynamicVariables: dynamicVariables
       }}
       selected={selected}
     />

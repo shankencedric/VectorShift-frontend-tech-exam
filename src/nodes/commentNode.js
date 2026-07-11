@@ -6,13 +6,14 @@ import { FlexibleTextArea } from '../components/flexibleTextArea';
 
 export const CommentNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text);
+  const [dynamicVariables, setDynamicVariables] = useState([]);
 
   const body = 
     <>
       <label>
         /*
         <div className="pl-1.5 flex flex-col">
-          <FlexibleTextArea value={currText} onChange={setCurrText}/>
+          <FlexibleTextArea value={currText} onChange={setCurrText} onVariablesChange={setDynamicVariables}/>
         </div>
         */
       </label>
@@ -25,7 +26,8 @@ export const CommentNode = ({ id, data, selected }) => {
         title: 'Comment',
         body: body,
         inputHandles: null,
-        outputHandles: null
+        outputHandles: null,
+        dynamicVariables: dynamicVariables
       }}
       selected={selected}
     />

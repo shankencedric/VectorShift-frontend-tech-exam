@@ -1,7 +1,7 @@
 // nodeBase.js
 
 import { Handle, Position } from 'reactflow';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useUpdateNodeInternals } from 'reactflow';
 
 /**
@@ -96,6 +96,6 @@ const NormalizeHandles = (handles, isDynamic = false) => {
   return handles.map((handle) => {
     if (typeof handle === 'string') 
       return { name: handle, isDynamic: isDynamic}
-    return handle;
+    return { isDynamic: isDynamic, ...handle};
   });
 };
