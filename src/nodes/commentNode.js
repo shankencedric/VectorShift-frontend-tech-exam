@@ -1,15 +1,11 @@
 // commentNode.js
 
-import { useState, useEffect, useRef } from 'react';
-import { useUpdateNodeInternals } from 'reactflow';
+import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 import { FlexibleTextArea } from '../components/flexibleTextArea';
 
 export const CommentNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text);
-  const textareaRef = useRef(null); 
-
-  const updateNodeInternals = useUpdateNodeInternals(); // for recalibrating node boundaries when handle count changes
 
   const body = 
     <>

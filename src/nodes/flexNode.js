@@ -10,7 +10,6 @@ export const FlexNode = ({ id, data, selected }) => {
   const [selectionType, setSelectionType] = useState(data?.selectionType || 'sel');
 
   const handleTextChange = (e) => setCurrText(e.target.value);
-  const handleTextAreaChange = (e) => setCurrTextArea(e.target.value);
   const handleTypeChange = (e) => setSelectionType(e.target.value);
 
   const body = (

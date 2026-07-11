@@ -1,6 +1,6 @@
 // flexibleTextArea.js
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const FlexibleTextArea = ({ value: text, onChange: setText, rows = 1 }) => {
     
