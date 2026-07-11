@@ -1,11 +1,12 @@
 // inputNode.js
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NodeBase } from '../components/nodeBase';
 
 export const InputNode = ({ id, data, selected }) => {
   const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
   const [inputType, setInputType] = useState(data?.inputType || 'Text');
+  const [dynamicVariables, setDynamicVariables] = useState([]);
 
   const handleNameChange = (e) => {
     setCurrName(e.target.value);
@@ -14,6 +15,20 @@ export const InputNode = ({ id, data, selected }) => {
   const handleTypeChange = (e) => {
     setInputType(e.target.value);
   };
+
+  useEffect(() => {
+      const regex = /\{\{([a-zA-Z_$][a-zA-Z0-9_$]*)\}\}/g;
+      const found = [];
+      let match;
+
+      while ((match = regex.exec(currName)) !== null) {
+          if (!found.includes(match[1]))
+              found.push(match[1]);
+      }
+
+      setDynamicVariables(found);
+  }, [currName]);
+
 
   const body = 
     <>
@@ -44,7 +59,8 @@ export const InputNode = ({ id, data, selected }) => {
         title: 'Input',
         body: body,
         inputHandles: null,
-        outputHandles: [ `value` ]
+        outputHandles: [ `value` ],
+        dynamicVariables: dynamicVariables
       }}
       selected={selected}
     />

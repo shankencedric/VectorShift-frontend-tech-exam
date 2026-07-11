@@ -6,7 +6,6 @@ import { FlexibleTextArea } from '../components/flexibleTextArea';
 
 export const TextNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text || '');
-  const [dynamicVariables, setDynamicVariables] = useState([]);
 
   const body = 
     <>
@@ -15,7 +14,6 @@ export const TextNode = ({ id, data, selected }) => {
         <FlexibleTextArea 
           value={currText} 
           onChange={setCurrText} 
-          onVariablesChange={setDynamicVariables}
           placeholder='Type any text here...'
         />
       </label>
@@ -25,11 +23,10 @@ export const TextNode = ({ id, data, selected }) => {
     <NodeBase
       id={id}
       data={{
-        title: 'Text and Custom Input',
+        title: 'Text',
         body: body,
         inputHandles: null,
-        outputHandles: [ `output` ],
-        dynamicVariables: dynamicVariables
+        outputHandles: [ `output` ]
       }}
       selected={selected}
     />
