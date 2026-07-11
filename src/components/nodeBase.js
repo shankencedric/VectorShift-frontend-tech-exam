@@ -26,7 +26,9 @@ import { useUpdateNodeInternals } from 'reactflow';
  */
 export const NodeBase = ({ id, data, selected }) => {
 
-  const inputs = NormalizeHandles([...(data?.inputHandles || []), ...(data?.dynamicVariables || [])]);
+  const staticInputs = NormalizeHandles(data?.inputHandles || [], false);
+  const dynamicInputs = NormalizeHandles(data?.dynamicVariables || [], true);
+  const inputs = [...staticInputs, ...dynamicInputs];
   const outputs = NormalizeHandles(data?.outputHandles || []);
   
   // This block updates alignment if needed
@@ -45,23 +47,14 @@ export const NodeBase = ({ id, data, selected }) => {
 
       {/* INPUT HANDLES */}
       {inputs.map((handle, i) => (
-        <>
-          <Handle
-            key={`inp-${i}`}
-            type={handle.type ?? 'target'}
-            position={handle.position ?? Position.Left}
-            id={`${id}-${handle.name}-${i}`}
-            className="vs-flow-handle"
-            style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
-          />
-          
-          {/* Floating Variable Tag */}
-          {handle.isDynamic && (
-            <span className="absolute left-4 -translate-y-1/2 text-[9px] font-sans font-bold text-gray-400 bg-white/90 px-1 py-0.5 rounded shadow-2xs uppercase tracking-wide whitespace-nowrap">
-              {handle.name}
-            </span>
-          )}
-        </>
+        <Handle
+          key={`inp-${i}`}
+          type={handle.type ?? 'target'}
+          position={handle.position ?? Position.Left}
+          id={`${id}-${handle.name}-${i}`}
+          className={`vs-flow-handle ${handle.isDynamic ? '!border-vs-grey' : '!border-vs-dark'}`}
+          style={{ top: `${(i+1) / (inputs.length+1) * 100}%`, ...handle.style }}
+        />
       ))}
 
       {/* HEADER */}
@@ -83,7 +76,7 @@ export const NodeBase = ({ id, data, selected }) => {
           type={handle.type ?? 'source'}
           position={handle.position ?? Position.Right}
           id={`${id}-${handle.name}-${i}`}
-          className="vs-flow-handle"
+          className={`vs-flow-handle`}
           style={{ top: `${(i+1) / (outputs.length+1) * 100}%`, ...handle.style }}
       />))}
     </div>
@@ -94,14 +87,15 @@ export const NodeBase = ({ id, data, selected }) => {
  * Normalizes an array of handles to ensure uniform object structure.
  * Converts simple string IDs into base configuration objects.
  * @param {Array<string | HandleConfig>} [handles] - The raw array of handle strings or custom configuration objects (`HandleConfig` objects).
+ * @param {bool} [handles] - Defines if this array is from the user. In which case, isDynamic=true is passed to each handle returned.
  * @returns {Array<HandleConfig>} A standardized array of `HandleConfig` objects.
  */
-const NormalizeHandles = (handles) => {
+const NormalizeHandles = (handles, isDynamic = false) => {
   if (!handles) return [];
 
   return handles.map((handle) => {
     if (typeof handle === 'string') 
-      return { name: handle }
+      return { name: handle, isDynamic: isDynamic}
     return handle;
   });
 };

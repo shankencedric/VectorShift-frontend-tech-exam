@@ -10,7 +10,8 @@ module.exports = {
       colors: {
         'vs-cream': '#fcfbf8',
         'vs-dark': '#12151a',
-        'vs-gold': '#5b4824',
+        'vs-grey': '#9ca3af',
+        'vs-gold': '#b89b5e',
       },
     },
   },
