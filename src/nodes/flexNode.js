@@ -5,8 +5,8 @@ import { NodeBase } from '../components/nodeBase';
 import { FlexibleTextArea } from '../components/flexibleTextArea';
 
 export const FlexNode = ({ id, data, selected }) => {
-  const [currText, setCurrText] = useState(data?.text || 'Type briefly here...');
-  const [currTextArea, setCurrTextArea] = useState(data?.textarea || 'Type a lot here...');
+  const [currText, setCurrText] = useState(data?.text || '');
+  const [currTextArea, setCurrTextArea] = useState(data?.textarea || '');
   const [selectionType, setSelectionType] = useState(data?.selectionType || 'sel');
   const [dynamicVariables, setDynamicVariables] = useState([]);
 
@@ -20,7 +20,8 @@ export const FlexNode = ({ id, data, selected }) => {
         <input 
           type="text" 
           value={currText} 
-          onChange={handleTextChange} 
+          onChange={handleTextChange}
+          placeholder='Type briefly here...' 
         />
       </label>
 
@@ -30,6 +31,7 @@ export const FlexNode = ({ id, data, selected }) => {
           value={currTextArea} 
           onChange={setCurrTextArea} 
           onVariablesChange={setDynamicVariables}
+          placeholder='Type a lot here...'
         />
       </label>
 

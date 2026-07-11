@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 
 export const DecoderNode = ({ id, data, selected }) => {
-  const [currText, setCurrText] = useState(data?.text || 'Name');
+  const [currText, setCurrText] = useState(data?.text || '');
   const [decodingType, setDecodingType] = useState(data?.decodingType || 'base64');
 
   const handleTextChange = (e) => setCurrText(e.target.value);
@@ -18,6 +18,7 @@ export const DecoderNode = ({ id, data, selected }) => {
           type="text" 
           value={currText} 
           onChange={handleTextChange} 
+          placeholder='Type name here...'
         />
       </label>
       <label>

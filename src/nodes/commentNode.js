@@ -13,7 +13,7 @@ export const CommentNode = ({ id, data, selected }) => {
       <label>
         /*
         <div className="pl-1.5 flex flex-col">
-          <FlexibleTextArea value={currText} onChange={setCurrText} onVariablesChange={setDynamicVariables}/>
+          <FlexibleTextArea value={currText} onChange={setCurrText} onVariablesChange={setDynamicVariables} placeholder='Type comments here...'/>
         </div>
         */
       </label>
