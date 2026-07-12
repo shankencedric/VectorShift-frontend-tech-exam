@@ -48,7 +48,7 @@ export const NodeBase = ({ id, data, selected }) => {
       {/* INPUT HANDLES */}
       {inputs.map((handle, i) => (
         <Handle
-          key={`inp-${i}`}
+          key={`inp-${id}`}
           type={handle.type ?? 'target'}
           position={handle.position ?? Position.Left}
           id={`${id}-${handle.name}-${i}`}
@@ -72,7 +72,7 @@ export const NodeBase = ({ id, data, selected }) => {
       {/* OUTPUT HANDLES */}
       {outputs.map((handle, i) => (
         <Handle
-          key={`out-${i}`}
+          key={`out-${id}`}
           type={handle.type ?? 'source'}
           position={handle.position ?? Position.Right}
           id={`${id}-${handle.name}-${i}`}

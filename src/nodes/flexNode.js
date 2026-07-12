@@ -10,12 +10,11 @@ export const FlexNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text || '');
   const [currTextArea, setCurrTextArea] = useState(data?.textarea || '');
   const [selectionType, setSelectionType] = useState(data?.selectionType || 'sel');
-  const [dynamicVariables, setDynamicVariables] = useState([]);
+  const dynamicVariables = useVariableParser(id, customInputs);
 
   const handleCustomInputsChange = (e) => setCustomInputs(e.target.value);
   const handleTextChange = (e) => setCurrText(e.target.value);
   const handleTypeChange = (e) => setSelectionType(e.target.value);
-  useVariableParser(customInputs, setDynamicVariables);
 
   const body = (
     <>

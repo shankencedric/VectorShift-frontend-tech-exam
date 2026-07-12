@@ -23,9 +23,9 @@ export const SubmitButton = () => {
       alert(
         `🚀 Pipeline Analysis Complete!\n` +
         `--------------------------------\n` +
-        `📦 Total Nodes: ${data.num_nodes}\n` +
-        `🔗 Total Edges: ${data.num_edges}\n` +
-        `🔄 Is it a valid DAG? ${data.is_dag ? '✅ Yes (No loops)' : '❌ No (Infinite cycle detected)'}`
+        `🔁 You submitted a Directed ${data.is_dag ? 'ACYCLIC Graph (DAG)' : 'CYCLIC Graph'} with\n` +
+        `📦 ${data.num_nodes} total nodes, and\n` +
+        `🔗 ${data.num_edges} total edges.\n`
       );
     } catch (error) {
       console.error("Submission failed:", error);

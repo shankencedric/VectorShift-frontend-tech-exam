@@ -1,26 +1,22 @@
 // textNode.js
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 import { FlexibleTextArea } from '../components/flexibleTextArea';
 import { useVariableParser } from '../hooks/useVariableParser'
 
 export const TextNode = ({ id, data, selected }) => {
   const [currText, setCurrText] = useState(data?.text || '');
-  const [dynamicVariables, setDynamicVariables] = useState([]);
+  const dynamicVariables = useVariableParser(id, currText);
 
-  const handleTextChange = (e) => { setCurrText(e.target.value); };
-  useVariableParser(currText, setDynamicVariables);
-  
   const body = 
     <>
       <label>
         Text
-        <input
-          type="text" 
+        <FlexibleTextArea
           value={currText} 
-          onChange={handleTextChange} 
-          placeholder='Type any or {{inputName}} here...'
+          onChange={setCurrText} 
+          placeholder='Type anything or define custom inputs using the {{inputName}} pattern here...'
           rows={3}
         />
       </label>

@@ -1,17 +1,16 @@
 // inputNode.js
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NodeBase } from '../components/nodeBase';
 import { useVariableParser } from '../hooks/useVariableParser'
 
 export const InputNode = ({ id, data, selected }) => {
   const [currName, setCurrName] = useState(data?.inputName || `{{${id.replace('customInput-', 'input_')}}}`);
   const [inputType, setInputType] = useState(data?.inputType || 'Text');
-  const [dynamicVariables, setDynamicVariables] = useState([]);
+  const dynamicVariables = useVariableParser(id, currName);
 
   const handleNameChange = (e) => { setCurrName(e.target.value); };
   const handleTypeChange = (e) => { setInputType(e.target.value); };
-  useVariableParser(currName, setDynamicVariables);
 
   const body = 
     <>
