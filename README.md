@@ -49,7 +49,7 @@ uvicorn main:app --reload # Start the server
 The backend will run on http://localhost:8000.
 
 ### 2. Start the Backend
-Open a new terminal in the /frontend directory and run:
+Open a new terminal in the `/frontend` directory and run:
 ```bash
 npm install # Install dependencies (only required at first boot)
 npm start # Start the application
