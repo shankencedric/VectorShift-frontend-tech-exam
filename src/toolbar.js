@@ -2,8 +2,9 @@
 
 import { DraggableNode } from './draggableNode';
 import { nodeRegistry } from './nodes';
+import { SubmitButton } from './submit';
 
-export const PipelineToolbar = ({ onSubmit }) => {
+export const PipelineToolbar = ({ }) => {
 
     return (
         <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-xs">
@@ -19,22 +20,7 @@ export const PipelineToolbar = ({ onSubmit }) => {
             </div>
             
             <div className="flex items-center gap-4">
-                <button
-                    onClick={onSubmit}
-                    type="submit"
-                    className="
-                      px-4 py-2 min-w-[110px]
-                      text-[10px] font-sans font-bold text-white bg-vs-dark
-                      tracking-widest uppercase rounded-sm
-                      border border-vs-dark shadow-xs
-                      cursor-pointer select-none
-                      hover:bg-vs-dark/90 hover:border-vs-dark
-                      active:scale-[0.99]
-                      transition-all duration-150 ease-in-out
-                    "
-                >
-                    Test Pipeline
-                </button>
+                <SubmitButton/>
             </div>
 
         </div>
