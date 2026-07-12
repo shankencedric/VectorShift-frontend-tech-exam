@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Pipeline Graph Editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a full-stack node-based pipeline editor. It allows users to build, connect, and analyze dynamic data pipelines using React Flow on the frontend and FastAPI on the backend.
 
-## Available Scripts
+## 🚀 Implementation Details
 
-In the project directory, you can run:
+### Part 1: Architecture & Node Abstraction
+To ensure scalability and clean code, the canvas architecture relies on a shared `NodeBase` component. This prevents repetitive boilerplate and standardizes how handles and styles are applied across the graph. 
 
-### `npm start`
+Five distinct nodes were built to prove the architecture:
+* **Attachment Node:** 1 output.
+* **Comment Node:** 0 inputs, 0 outputs (strictly for canvas annotation).
+* **Decoder Node:** 1 input, 1 output.
+* **Encoder Node:** 1 input, 1 output.
+* **Flex Node:** A multipurpose testing node featuring 3 static inputs, 5 static outputs, and support for all input types (text, selects, etc.).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Part 2: Styling & UI Refinement
+* **High-Contrast Theme:** Configured custom Tailwind variables (`vs-dark` for structural elements and a carefully adjusted `vs-gold` for highlights) to ensure high visibility and a premium interface.
+* **CSS Handle Overrides:** Extracted raw style objects into clean Tailwind utility classes to manage dynamic handle borders seamlessly.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Part 3: Text Processing & Dynamic Variables
+* **Auto-Resizing Text Areas:** Built a custom `FlexibleTextArea` component that recalculates its height dynamically based on user input, removing native scroll friction.
+* **The `useVariableParser` Hook:** Extracted Regex parsing logic into a shared custom hook to strictly follow the DRY principle. Any node can now instantly support dynamic `{{variable}}` handle generation by importing this single hook.
+* **Phantom Edge Sweeper:** Built a custom React Flow cleanup routine inside the `useVariableParser` hook. If a user deletes a `{{variable}}` that has an active connection wire attached to it, this sweeper automatically detects the orphaned target and sweeps the edge from the global Zustand store to prevent silent cycle-detection failures.
 
-### `npm test`
+### Part 4: Backend Integration & Graph Analysis
+The frontend communicates directly with a Python/FastAPI backend to analyze the graph topology.
+* **Topological Sorting:** The `/pipelines/parse` endpoint ingests the JSON payload of nodes and edges, builds an adjacency list and in-degree map, and applies Kahn's Topological Sorting Algorithm to calculate whether the graph is a valid Directed Acyclic Graph (DAG).
+* **Clean Feedback:** Returns the `num_nodes`, `num_edges`, and `is_dag` boolean to the frontend, which triggers a clean, structured alert displaying the analysis results.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 💻 Tech Stack
+* **Frontend:** React, React Flow, Zustand (Global State), TailwindCSS
+* **Backend:** Python, FastAPI, Pydantic
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Local Setup Instructions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You will need two terminal windows to run the frontend and backend simultaneously.
 
-### `npm run eject`
+### 1. Start the Backend
+Open a terminal in the `/backend` directory and run:
+```bash
+pip install fastapi uvicorn pydantic # Install dependencies (only required if you don't have them yet)
+uvicorn main:app --reload #  start the server
+```
+The backend will run on http://localhost:8000.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 2. Start the Backend
+Open a new terminal in the /frontend directory and run:
+```bash
+npm install # Install dependencies (only required at first boot)
+npm start
+```
