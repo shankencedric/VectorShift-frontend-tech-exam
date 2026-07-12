@@ -44,7 +44,7 @@ You will need two terminal windows to run the frontend and backend simultaneousl
 Open a terminal in the `/backend` directory and run:
 ```bash
 pip install fastapi uvicorn pydantic # Install dependencies (only required if you don't have them yet)
-uvicorn main:app --reload #  start the server
+uvicorn main:app --reload # Start the server
 ```
 The backend will run on http://localhost:8000.
 
@@ -52,5 +52,5 @@ The backend will run on http://localhost:8000.
 Open a new terminal in the /frontend directory and run:
 ```bash
 npm install # Install dependencies (only required at first boot)
-npm start
+npm start # Start the application
 ```
