@@ -41,7 +41,7 @@ The frontend communicates directly with a Python/FastAPI backend to analyze the 
 You will need two terminal windows to run the frontend and backend simultaneously.
 
 ### 1. Start the Backend
-Open a terminal in the `/backend` (currently outside this repository) directory and run:
+Open a terminal in the `/backend` directory (currently outside this repository) and run:
 ```bash
 pip install fastapi uvicorn pydantic # Install dependencies (only required if you don't have them yet)
 uvicorn main:app --reload # Start the server
