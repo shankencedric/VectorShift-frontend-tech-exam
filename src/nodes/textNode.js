@@ -20,7 +20,7 @@ export const TextNode = ({ id, data, selected }) => {
           type="text" 
           value={currText} 
           onChange={handleTextChange} 
-          placeholder='Type anything or define custom inputs by typing {{inputName}} here...'
+          placeholder='Type any or {{inputName}} here...'
           rows={3}
         />
       </label>
