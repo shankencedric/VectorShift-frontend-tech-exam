@@ -1,5 +1,3 @@
-// src/components/draggableNode.js (or wherever it lives in your setup)
-
 export const DraggableNode = ({ type, label }) => {
   const onDragStart = (event, nodeType) => {
     const appData = { nodeType };

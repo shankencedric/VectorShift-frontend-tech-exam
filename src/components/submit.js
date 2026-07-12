@@ -1,5 +1,5 @@
 // submit.js
-import { useStore } from './store';
+import { useStore } from '../store';
 
 export const SubmitButton = () => {
   const nodes = useStore((state) => state.nodes);

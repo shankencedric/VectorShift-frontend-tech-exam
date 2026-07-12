@@ -1,8 +1,7 @@
 // nodeBase.js
 
-import { Handle, Position } from 'reactflow';
+import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
 import { useEffect } from 'react';
-import { useUpdateNodeInternals } from 'reactflow';
 
 /**
  * @typedef {Object} HandleConfig
