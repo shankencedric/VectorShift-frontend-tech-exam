@@ -32,10 +32,6 @@ code {
   .react-flow__handle.vs-flow-handle:hover {
     transform: translateY(150%) scale(1.5);
   }
-  .react-flow__handle.vs-flow-handle::selection {
-    border-color: theme('colors.vs-gold');
-  }
-
 
   /* Automatically style every node label */
   .node-body-container label {
