@@ -21,15 +21,18 @@ export const SubmitButton = () => {
       const data = await response.json();
 
       alert(
-        `🚀 Pipeline Analysis Complete!\n` +
-        `--------------------------------\n` +
-        `🔁 You submitted a Directed ${data.is_dag ? 'ACYCLIC Graph (DAG)' : 'CYCLIC Graph'} with\n` +
-        `📦 ${data.num_nodes} total nodes, and\n` +
-        `🔗 ${data.num_edges} total edges.\n`
+        `Pipeline Analysis Complete! 🍻\n` +
+        `-----------------------------------\n` +
+        `${data.is_dag ? '✅ Graph submitted is a valid DAG (no cycles detected).' : '❌ Graph submitted is an invalid DAG (cycle detected).'}\n` +
+        `🔢 Graph data: ${data.num_nodes} nodes, ${data.num_edges} edges`
       );
     } catch (error) {
       console.error("Submission failed:", error);
-      alert(`⚠️ Could not connect to the backend. Make sure your Python FastAPI server is running on port 8000!`);
+      alert(
+        `Pipeline Analysis Failed... 🥀\n` +
+        `-----------------------------------\n` +
+        `Could not reach the backend. Please verify that your Python FastAPI server is running on port 8000.`
+      );
     }
   }
 
